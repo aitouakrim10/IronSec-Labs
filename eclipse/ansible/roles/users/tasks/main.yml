@@ -1,0 +1,49 @@
+---
+- name: Create lab users
+  user:
+    name: "{{ item.name }}"
+    comment: "Pentest user"
+    shell: /bin/bash
+    create_home: yes
+  loop: "{{ users }}"
+
+- name: Set weak passwords for users (lab only)
+  copy:
+    dest: /tmp/set_passwords.sh
+    content: |
+      #!/bin/bash
+      {% for u in users %}
+      echo "{{ u.name }}:{{ u.password }}" | chpasswd
+      {% endfor %}
+    mode: '0700'
+
+- name: Run password script
+  command: /tmp/set_passwords.sh
+
+- name: Copy vagrant's authorized_keys to alice for key-based lateral movement (if exists)
+  copy:
+    src: "{{ ssh_key_source }}"
+    dest: /home/alice/.ssh/authorized_keys
+    owner: alice
+    group: alice
+    mode: '0600'
+    remote_src: yes
+  ignore_errors: yes
+
+- name: Create a controlled escalation script owned by root
+  copy:
+    dest: "{{ escalate_script }}"
+    content: |
+      #!/bin/bash
+      # Controlled escalation: create a readable root-owned flag for the lab
+      echo "ROOT_FLAG: lab_root_flag" > /root/flag.txt
+      chmod 600 /root/flag.txt
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Allow bob to run escalate.sh as root without password (lab sudoers)
+  copy:
+    dest: /etc/sudoers.d/pentest_escalate
+    content: "bob ALL=(root) NOPASSWD: {{ escalate_script }}\n"
+    mode: '0440'

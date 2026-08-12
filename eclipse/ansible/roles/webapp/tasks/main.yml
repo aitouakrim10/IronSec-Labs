@@ -1,0 +1,58 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install web packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+
+- name: Ensure apache is enabled and started
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+
+- name: Create web root directory
+  file:
+    path: "{{ web_root }}"
+    state: directory
+    owner: "{{ web_owner }}"
+    group: "{{ web_owner }}"
+    mode: '0775'
+
+- name: Create uploads directory (writable)
+  file:
+    path: "{{ web_root }}/uploads"
+    state: directory
+    owner: "{{ web_owner }}"
+    group: "{{ web_owner }}"
+    mode: '0777'
+
+- name: Deploy index.php template
+  template:
+    src: index.php.j2
+    dest: "{{ web_root }}/index.php"
+    owner: "{{ web_owner }}"
+    group: "{{ web_owner }}"
+    mode: '0644'
+
+- name: Deploy view.php template
+  template:
+    src: view.php.j2
+    dest: "{{ web_root }}/view.php"
+    owner: "{{ web_owner }}"
+    group: "{{ web_owner }}"
+    mode: '0644'
+
+- name: Set ownership for web files
+  file:
+    path: "{{ web_root }}"
+    recurse: yes
+    owner: "{{ web_owner }}"
+    group: "{{ web_owner }}"
+
+- name: Restart apache
+  meta: flush_handlers

@@ -1,0 +1,13 @@
+<?php
+if (!empty($_GET['f'])) {
+    $file = basename($_GET['f']);
+    $path = __DIR__ . '/uploads/' . $file;
+    if (file_exists($path)) {
+        include $path; // intentionally unsafe for lab
+    } else {
+        echo 'Not found';
+    }
+} else {
+    echo 'No file specified';
+}
+?>

@@ -1,0 +1,3 @@
+eclipse/.vagrant
+eclipse/ansible/ansible.cfg
+eclipse/ansible/inventory/hosts.ini

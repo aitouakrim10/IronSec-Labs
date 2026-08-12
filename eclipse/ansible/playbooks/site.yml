@@ -1,0 +1,7 @@
+---
+- name: Provision pentest lab (roles topology)
+  hosts: lab
+  become: yes
+  roles:
+    - webapp
+    - users

@@ -1,0 +1,19 @@
+<?php
+echo "<h2>Pentest lab: vulnerable upload</h2>";
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])
+) {
+    $uploaddir = __DIR__ . '/uploads/';
+    $uploadfile = $uploaddir . basename($_FILES['file']['name']);
+    if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+        echo "File uploaded: " . htmlspecialchars(basename($_FILES['file']['name']));
+        echo "<br><a href='view.php?f=" . urlencode(basename($_FILES['file']['name'])) . "'>View</a>";
+    } else {
+        echo "Upload failed.";
+    }
+}
+?>
+<form enctype="multipart/form-data" method="POST">
+  <input type="file" name="file" />
+  <input type="submit" value="Upload" />
+</form>

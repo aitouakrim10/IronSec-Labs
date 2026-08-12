@@ -1,0 +1,8 @@
+---
+users:
+  - name: alice
+    password: "alice"
+  - name: bob
+    password: "bob"
+ssh_key_source: /home/vagrant/.ssh/authorized_keys
+escalate_script: /usr/local/bin/escalate.sh

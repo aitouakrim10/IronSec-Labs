@@ -1,0 +1,11 @@
+---
+packages:
+  - apache2
+  - php5
+  - libapache2-mod-php5
+  - php5-mysql
+  - git
+  - unzip
+
+web_root: /var/www/html/pentest_lab
+web_owner: www-data
