@@ -1,0 +1,8 @@
+---
+users:
+  - name: slice
+    password: "$6$UWFptZM9Epbf9MRy$w1.44wS3JyCmKWj6C2SooSJDzQHEVn6r6i1vmg7utkVEwt0sF1pbnP1GzJZS.S/0RicPY4P0GU4z1ra5M46nd/"
+  - name: arya
+    password: "$6$a/JLvhj1GafaokP8$YZI/7rmDXXvTa4ryHAq4CAsXkNneaVm6AYBuW5TS.L4vQMc3b3ewKr2Ajvu2tdO4r5Of5QbXur9Qwm0wYX3RJ0"
+  - name: jon
+    password: "$6$fjBEqC/RXaxU7UAc$PQkXtpxp4I3Ykgd2sf.5EkmLED9G9.BLnJXdEymaPPGDJPiBO2IOpibKmlMjTyIYnbl.HFFrM9a5SQQntkyDi1"

@@ -1,0 +1,6 @@
+---
+- name: Create users
+  hosts: alpine
+  become: true
+  roles:
+    - users

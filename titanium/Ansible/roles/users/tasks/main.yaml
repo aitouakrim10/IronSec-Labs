@@ -1,0 +1,8 @@
+---
+- name: Create users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    state: present
+    shell: "{{ item.shell | default('/bin/bash') }}"
+  loop: "{{ users }}"
